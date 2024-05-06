@@ -2,12 +2,29 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Cloudflare Pages Data Display</title>
+  <title>Event Management System Status</title>
 </head>
 <body>
-  <h1>Welcome to the Cloudflare Pages Site!</h1>
-  <p>This is a simple page hosted on Cloudflare Pages.</p>
-  <script src="/functions/api/receive-data.js"></script>
-  <!-- This is a basic structure; you might add logic to fetch and display data -->
+  <h1>Fetched Data</h1>
+  <ul id="data-list"></ul> <!-- This is where the data will be displayed -->
+
+  <script>
+    // Fetch the data from the serverless function
+    fetch('/api/get-data')
+      .then((response) => response.json())
+      .then((data) => {
+        const dataList = document.getElementById('data-list');
+
+        // Populate the list with fetched data
+        data.forEach((item) => {
+          const listItem = document.createElement('li');
+          listItem.textContent = `Key: ${item.key}, Value: ${JSON.stringify(item.value)}`;
+          dataList.appendChild(listItem);
+        });
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  </script>
 </body>
 </html>
