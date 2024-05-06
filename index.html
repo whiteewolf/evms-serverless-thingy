@@ -17,7 +17,7 @@
 </center>
   <script>
     // Fetch the data from the serverless function
-    fetch('/api/get-data')
+    fetch('/api/receive-data')
       .then((response) => response.json())
       .then((data) => {
         const dataList = document.getElementById('data-list');
