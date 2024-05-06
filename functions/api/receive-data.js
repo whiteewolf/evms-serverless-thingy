@@ -1,8 +1,4 @@
 export async function onRequestGet(context) {
-  const { env } = context;
-
-  // Fetch all keys from the KV namespace
-  const keys = await env.MY_KV.list();
 
   const data = await Promise.all(
     keys.keys.map(async (key) => {
