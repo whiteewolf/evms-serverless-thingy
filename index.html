@@ -1,35 +1,41 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Event Management System Status</title>
+  <title>JSON Data Display</title>
 </head>
 <body>
-  <style>
-    body {
-      background-color: black;
-      color: white;
-    }
-  </style>
-  <center>
-  <h1>Fetched Data</h1>
-  <ul id="data-list"></ul> <!-- This is where the data will be displayed -->
-</center>
-  <script>
-    // Fetch the data from the serverless function
-    fetch('/api/receive-data')
-      .then((response) => response.json())
-      .then((data) => {
-        const dataList = document.getElementById('data-list');
+  <h1>Displaying JSON Data</h1>
+  <div id="json-output"></div> <!-- This div will display the JSON data -->
 
-        // Populate the list with fetched data
-        data.forEach((item) => {
+  <script>
+    // Define the endpoint to fetch JSON data
+    const jsonEndpoint = 'https://your-server-endpoint.com/api/get-data'; // Change to your endpoint
+
+    // Fetch JSON data
+    fetch(jsonEndpoint)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json(); // Parse the JSON data
+      })
+      .then((jsonData) => {
+        // Display the JSON data in the page
+        const outputElement = document.getElementById('json-output');
+
+        // Create a list of key-value pairs from the JSON data
+        const jsonList = document.createElement('ul');
+        jsonData.forEach((item) => {
           const listItem = document.createElement('li');
           listItem.textContent = `Key: ${item.key}, Value: ${JSON.stringify(item.value)}`;
-          dataList.appendChild(listItem);
+          jsonList.appendChild(listItem);
         });
+
+        outputElement.appendChild(jsonList);
       })
       .catch((error) => {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching JSON data:', error);
       });
   </script>
 </body>
