@@ -1,9 +1,9 @@
 [env.production]
-name = "cloudflare-pages-project"
+name = "evms-serverless-thingy"
 type = "javascript"
-account_id = "YOUR_ACCOUNT_ID"
+account_id = "fc69356cb20dc9f1f193912c78d92f8a"
 workers_dev = true
 
 [[kv_namespaces]]
 binding = "MY_KV"
-id = "543d750e76b647f4b4add3dcd7fe9b7c"
+id = "3616e5cf41cb476490916923135ae87a"
