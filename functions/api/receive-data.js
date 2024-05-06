@@ -1,4 +1,4 @@
-export async function onRequestGet(context) {
+export async function onRequestGet() {
 
   const data = await Promise.all(
     keys.keys.map(async (key) => {
