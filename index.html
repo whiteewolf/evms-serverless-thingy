@@ -5,9 +5,15 @@
   <title>Event Management System Status</title>
 </head>
 <body>
+  <style>
+    body {
+      background-color: black;
+    }
+  </style>
+  <center>
   <h1>Fetched Data</h1>
   <ul id="data-list"></ul> <!-- This is where the data will be displayed -->
-
+</center>
   <script>
     // Fetch the data from the serverless function
     fetch('/api/get-data')
