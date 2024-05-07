@@ -1,17 +1,31 @@
 export async function onRequestPost(context) {
-  const { request, env } = context;
+  try {
+    const { request, env } = context;
 
-  const data = await request.json();
+    // Parse the incoming request data
+    const data = await request.json();
 
-  const key = `data:${new Date().getTime()}`; // Create a unique key based on the timestamp
+    // Use a unique key to store data in Workers KV
+    const key = `data:${new Date().getTime()}`;
 
-  // Store data in the KV namespace
-  await env.MY_KV.put(key, JSON.stringify(data));
+    // Store the data in the KV namespace
+    await env.MY_KV.put(key, JSON.stringify(data));
 
-  return new Response(
-    JSON.stringify({ status: 'success', message: 'Data stored successfully' }),
-    {
-      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
-    }
-  );
+    return new Response(
+      JSON.stringify({ status: 'success', message: 'Data stored successfully' }),
+      {
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+      }
+    );
+  } catch (error) {
+    console.error('Error in serverless function:', error);
+
+    return new Response(
+      JSON.stringify({ status: 'error', message: 'Internal Server Error' }),
+      {
+        status: 500,
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+      }
+    );
+  }
 }
