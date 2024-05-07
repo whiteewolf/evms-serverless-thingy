@@ -1,17 +1,18 @@
 [env.production]
-name = "evms-serverless-thingy"
-type = "javascript"
+name = "evms-serverless-thingy"  # Project name
+type = "javascript"  # Project type
 account_id = "fc69356cb20dc9f1f193912c78d92f8a"  # Cloudflare account ID
 
-[env.production]  # Production environment configuration
-workers_dev = false  # Indicates that we're not using the Workers development mode for production
+# Production environment configuration (ensure there's only one instance of this)
+[env.production]
+workers_dev = false  # Use Workers development mode for production
 
 [build]
 command = "npm run build"  # Build command, if required
 directory = "public"  # Directory containing the build output
 
 # This property tells Cloudflare Pages where to find the build output for deployment
-pages_build_output_dir = "public"  # This should match the [build].directory
+pages_build_output_dir = "public"  # Match the [build].directory
 
 # KV namespace configuration, if using Workers KV
 [[kv_namespaces]]
