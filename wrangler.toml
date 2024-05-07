@@ -4,6 +4,10 @@ type = "javascript"
 account_id = "fc69356cb20dc9f1f193912c78d92f8a"
 workers_dev = true
 
+[build]
+command = "npm run build"  # Build command, if required
+directory = "public"  # Directory containing the build output (adjust as needed)
+
 [[kv_namespaces]]
 binding = "evms-test"
 id = "3616e5cf41cb476490916923135ae87a"
