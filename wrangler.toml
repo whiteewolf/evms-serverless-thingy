@@ -15,6 +15,6 @@ directory = "public"  # Directory containing the build output
 pages_build_output_dir = "public"  # Match the [build].directory
 
 # KV namespace configuration, if using Workers KV
-[[kv_namespaces]]
+[kv_namespaces]
 binding = "evms-test"  # Binding name
 id = "3616e5cf41cb476490916923135ae87a"  # KV namespace ID
