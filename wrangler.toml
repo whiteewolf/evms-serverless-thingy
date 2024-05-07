@@ -5,5 +5,5 @@ account_id = "fc69356cb20dc9f1f193912c78d92f8a"
 workers_dev = true
 
 [[kv_namespaces]]
-binding = "MY_KV"
+binding = "evms-test"
 id = "3616e5cf41cb476490916923135ae87a"
