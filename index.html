@@ -1,41 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="application/json"; charset=UTF-8">
-  <title>JSON Data Display</title>
+  <meta charset="UTF-8">
+  <title>Cloudflare Serverless Data Viewer</title>
+  <!-- Optional CSS styling for basic formatting -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+    }
+    .data-list {
+      list-style-type: none;
+      padding: 0;
+    }
+    .data-list li {
+      background-color: #f9f9f9;
+      padding: 10px;
+      margin: 5px 0;
+      border: 1px solid #ddd;
+    }
+    .error-message {
+      color: red;
+    }
+  </style>
 </head>
 <body>
-  <h1>Displaying JSON Data</h1>
-  <div id="json-output"></div> <!-- This div will display the JSON data -->
+  <h1>Fetched Data from Cloudflare Workers</h1>
+
+  <p id="status-message">Loading data...</p> <!-- Status or error message -->
+  <ul id="data-list" class="data-list"></ul> <!-- List to display fetched data -->
 
   <script>
-    // Define the endpoint to fetch JSON data
-    const jsonEndpoint = 'https://evms-serverless-thingy.pages.dev/receive-data'; // Change to your endpoint
+    const endpoint = '/api/store-and-get-data'; // The serverless function endpoint
 
-    // Fetch JSON data
-    fetch(jsonEndpoint)
-      .then((response) => {
+    // Fetch data from the serverless function
+    fetch(endpoint)
+      .then(response => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
         return response.json(); // Parse the JSON data
       })
-      .then((jsonData) => {
-        // Display the JSON data in the page
-        const outputElement = document.getElementById('json-output');
+      .then(data => {
+        const dataList = document.getElementById('data-list');
+        const statusMessage = document.getElementById('status-message');
 
-        // Create a list of key-value pairs from the JSON data
-        const jsonList = document.createElement('ul');
-        jsonData.forEach((item) => {
-          const listItem = document.createElement('li');
-          listItem.textContent = `Key: ${item.key}, Value: ${JSON.stringify(item.value)}`;
-          jsonList.appendChild(listItem);
-        });
-
-        outputElement.appendChild(jsonList);
+        if (data.length === 0) {
+          statusMessage.textContent = 'No data found.';
+        } else {
+          statusMessage.textContent = 'Data loaded successfully.';
+          data.forEach(item => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `Key: ${item.key}, Value: ${JSON.stringify(item.value)}`;
+            dataList.appendChild(listItem);
+          });
+        }
       })
-      .catch((error) => {
-        console.error('Error fetching JSON data:', error);
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        document.getElementById('status-message').textContent = `Error fetching data: ${error.message}`;
       });
   </script>
 </body>
